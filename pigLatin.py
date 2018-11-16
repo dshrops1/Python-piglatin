@@ -3,8 +3,12 @@
 
 #better this than an additonal function call?
 vowels = "aeiouAEIOU"
+finalList = []
+
 
 fileChoice = input("Please enter file choice: ")
+
+newFile = fileChoice[0:-4] + "PL.txt"
 
 #lets write unit tests for this as well
 def transformToPigLatin(line):
@@ -31,7 +35,7 @@ def firstOccurrenceOfVowel(word):
     return indexOfOccurence[0]
 
 
-finalList = []
+
 
 with open(fileChoice) as f:
 
@@ -40,15 +44,19 @@ with open(fileChoice) as f:
         finalList.append(transformToPigLatin(line.strip().split(" ")))
 
 
-with open(fileChoice[0:-4] + "PL.txt", "w+") as f2:
+with open(newFile, "w+") as f2:
     pass
 
 
 
 for line in finalList:
     for word in line:
-        with open(fileChoice[0:-4] + "PL.txt", "a") as f2:
-            f2.write(word + " ")
+        with open(newFile, "a") as f2:
+            #not making the common case fast here but thats fine
+            if line.index(word) == len(line)-1:
+                f2.write(word + "\n")
+            else:
+                f2.write(word + " ")
 
 
 
